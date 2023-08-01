@@ -1,0 +1,3 @@
+.build/ft_putchar_fd.o: src/ft_putchar_fd.c src/../include/libftprintf.h
+
+src/../include/libftprintf.h:
