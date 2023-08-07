@@ -46,11 +46,13 @@ NAME2 client
 LIBFT_DIR libft/
 LIBFT_INC libft/include
 INC include
+SRC_DIR src
 
 SRC1 server.c server_utils.c
 SRC2 client.c
-SRC src1 + src2
+SRC $(addprefix $(SRC_DIR), $(SRC))
 OBJ $(SRC:%.c=%.o)
+DEP 
 
 CC cc
 
