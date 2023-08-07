@@ -35,3 +35,27 @@ fclean: clean
 re: fclean all
 
 .PHONY: clean fclean re all
+
+
+NAME minitalk
+
+NAME1 server
+
+NAME2 client
+
+LIBFT_DIR libft/
+LIBFT_INC libft/include
+INC include
+
+SRC1 server.c server_utils.c
+SRC2 client.c
+SRC src1 + src2
+OBJ $(SRC:%.c=%.o)
+
+CC cc
+
+CPFLAGS -Wall -Wextra -Werror
+
+CPPFLAGS -L./libf -lft -I./libft/include -./include
+
+
