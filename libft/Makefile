@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+         #
+#    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 17:14:27 by mvisca            #+#    #+#              #
-#    Updated: 2023/06/26 17:00:22 by mvisca-g         ###   ########.fr        #
+#    Updated: 2023/08/09 12:51:16 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,6 +129,7 @@ $(BUILD_DIR)%.o: $(SRCS_DIR)%.c
 	@$(DIR_DUP)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 	@echo "$(GREEN)Building $(NC)$(notdir $<) $(RED)-> $(NC)$(notdir $@)"
+-include $(DEPS)
 
 clean:
 	@echo "$(RED)Deleting objects for $(NC)lift *.o *.d $(RED)>> 🗑️$(NC)"

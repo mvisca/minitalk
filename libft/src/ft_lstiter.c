@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 18:35:14 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/06/19 16:58:25 by mvisca-g         ###   ########.fr       */
+/*   Updated: 2023/08/09 13:03:07 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libftprintf.h"
+#include <libft.h>
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {

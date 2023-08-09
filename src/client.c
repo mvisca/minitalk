@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/06 20:34:14 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/09 16:47:17 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	main(int ac, char **av)
 {
 	char		*str;
 	__pid_t		pid;
-	int			bit;
-	int			c;
 
 	if (ac != 3)
 		return (1);

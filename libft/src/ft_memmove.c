@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 19:55:11 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/01 19:47:02 by mvisca-g         ###   ########.fr       */
+/*   Updated: 2023/08/09 13:03:53 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libftprintf.h"
+#include <libft.h>
 
 static void	ft_d_minor_s(size_t *i, size_t *e, size_t n, int *d)
 {

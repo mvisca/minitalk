@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 13:17:06 by mvisca            #+#    #+#             */
-/*   Updated: 2023/08/02 14:22:42 by mvisca-g         ###   ########.fr       */
+/*   Updated: 2023/08/09 13:01:50 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../include/libft.h"
 
 long long int	ft_atol(const char *n)
 {

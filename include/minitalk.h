@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:56:53 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/05 02:35:36 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/09 16:45:06 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <signal.h>
 # include <unistd.h>
 # include <libft.h>
-
 
 // Linked list of chars node's struct
 typedef struct	s_char_node

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putbasehex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:54:49 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/06/19 16:58:16 by mvisca-g         ###   ########.fr       */
+/*   Updated: 2023/08/09 12:59:54 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libftprintf.h"
+#include <libft.h>
 
 static int	ft_process_ultohexa(unsigned long value, char *base)
 {
