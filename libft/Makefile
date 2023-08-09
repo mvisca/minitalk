@@ -6,7 +6,7 @@
 #    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 17:14:27 by mvisca            #+#    #+#              #
-#    Updated: 2023/08/09 17:03:17 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/09 17:11:26 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,7 +128,7 @@ $(NAME): $(OBJS)
 $(BUILD_DIR)%.o: $(SRCS_DIR)%.c Makefile
 	@$(DIR_DUP)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
-	@echo "$(GREEN)Building $(NC)$(notdir $<) $(RED)-> $(NC)$(notdir $@)"
+	@echo "$(GREEN)Building...  $(NC)$(notdir $<) $(RED)-> $(NC)$(notdir $@)"
 -include $(DEPS)
 
 clean:
@@ -138,7 +138,7 @@ clean:
 
 fclean: clean
 	@echo "$(RED)Deleting $(NC)$(NAME) $(RED)>> 🗑️$(NC)"
-	@$(RM) $(NAME)
+	@$(RM) $(SNAME) $(CNAME)
 
 re: 
 	@$(MAKE) fclean 
