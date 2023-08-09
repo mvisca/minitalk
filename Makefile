@@ -6,7 +6,7 @@
 #    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/09 16:52:43 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/09 17:02:26 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ $(SNAME): $(addprefix $(BUILD), $(OBJ_SER)) $(LIBFT)
 $(CNAME): $(addprefix $(BUILD), $(OBJ_CLI)) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ 
 
-$(BUILD)%.o: $(SRC_DIR)%.c Makefile | $(LIBFT_DIR)/Makefile
+$(BUILD)%.o: $(SRC_DIR)%.c $(LIBFT) Makefile $(LIBFT_DIR)/Makefile
 	@$(DIR_DUP)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@	
 	@echo "$(GREEN)Creating... $(NC) $(notdir $@)"
