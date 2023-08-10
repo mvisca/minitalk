@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   server_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 01:18:45 by mvisca            #+#    #+#             */
-/*   Updated: 2023/08/06 20:56:58 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/10 16:04:16 by mvisca-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minitalk.h>
+#include "../include/minitalk.h"
+//#include <minitalk.h>
 
 t_char_node *mt_chrlst_new(t_char_node *head, char c)
 {

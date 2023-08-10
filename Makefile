@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
+#    By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/09 17:20:24 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/10 16:37:19 by mvisca-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,22 +70,24 @@ RM			:=	rm -r -f
 #	RECIPES			#
 #-------------------#
 
-all: callforlib | $(SNAME) $(CNAME)
+all: callforlib $(SNAME) $(CNAME)
 
 $(SNAME): $(addprefix $(BUILD), $(OBJ_SER)) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
+	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
 
 $(CNAME): $(addprefix $(BUILD), $(OBJ_CLI)) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ 
+	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
 
 $(BUILD)%.o: $(SRC_DIR)%.c $(INC)minitalk.h Makefile $(LIBFT_DIR)/Makefile $(LIBFT)
 	@$(DIR_DUP)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@	
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN)Creating... $(NC) $(notdir $@)"
 -include $(DEP)
 
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+# $(LIBFT):
+# 	@$(MAKE) -C $(LIBFT_DIR)
 
 clean:
 	@$(RM) $(BUILD)

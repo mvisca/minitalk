@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/09 16:47:17 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/10 16:04:43 by mvisca-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minitalk.h>
+// #include <minitalk.h>
+#include "../include/minitalk.h"
 
 static int	mt_clientatoi(const char *nptr)
 {
@@ -24,7 +25,7 @@ static int	mt_clientatoi(const char *nptr)
 	return (res);
 }
 
-static void	mt_send_signal(__pid_t pid, char c)
+static void	mt_send_signal(pid_t pid, char c)
 {
 	int	bit;
 	int	i;
@@ -46,7 +47,7 @@ static void	mt_send_signal(__pid_t pid, char c)
 int	main(int ac, char **av)
 {
 	char		*str;
-	__pid_t		pid;
+	pid_t		pid;
 
 	if (ac != 3)
 		return (1);

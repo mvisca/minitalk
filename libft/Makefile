@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
+#    By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 17:14:27 by mvisca            #+#    #+#              #
-#    Updated: 2023/08/09 17:11:26 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/10 16:29:59 by mvisca-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,9 +61,7 @@ SRCS		:=			\
 	ft_strtrim.c		\
 	ft_substr.c			\
 	ft_tolower.c		\
-	ft_toupper.c		\
-	ft_lstadd_back.c	\
-	ft_lstadd_front.c	\
+	ft_toupper.c	ft_lstadd_back.c	ft_lstadd_front.c	\
 	ft_lstclear.c		\
 	ft_lstdelone.c		\
 	ft_lstiter.c		\
@@ -94,7 +92,7 @@ CFLAGS 		:= -Wall -Wextra -Werror
 CPPFLAGS	:= $(addprefix -I,$(INCS)) -MMD -MP
 
 # Archiver 
-AR			:= ar -r -c -s
+AR			:= ar -rcs
 
 # Remover
 RM			:= rm -f -r
@@ -138,7 +136,7 @@ clean:
 
 fclean: clean
 	@echo "$(RED)Deleting $(NC)$(NAME) $(RED)>> 🗑️$(NC)"
-	@$(RM) $(SNAME) $(CNAME)
+	@$(RM) $(NAME)
 
 re: 
 	@$(MAKE) fclean 
