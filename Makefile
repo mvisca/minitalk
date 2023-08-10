@@ -6,7 +6,7 @@
 #    By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/10 16:37:19 by mvisca-g         ###   ########.fr        #
+#    Updated: 2023/08/10 16:41:46 by mvisca-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ $(CNAME): $(addprefix $(BUILD), $(OBJ_CLI)) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ 
 	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
 
-$(BUILD)%.o: $(SRC_DIR)%.c $(INC)minitalk.h Makefile $(LIBFT_DIR)/Makefile $(LIBFT)
+$(BUILD)%.o: $(SRC_DIR)%.c $(INC)minitalk.h $(LIBFT_DIR)$(INC)libft.h Makefile $(LIBFT_DIR)/Makefile $(LIBFT)
 	@$(DIR_DUP)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN)Creating... $(NC) $(notdir $@)"
