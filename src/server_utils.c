@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 01:18:45 by mvisca            #+#    #+#             */
-/*   Updated: 2023/08/10 16:04:16 by mvisca-g         ###   ########.fr       */
+/*   Updated: 2023/08/11 00:44:03 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,12 @@ void mt_chrlst_clear(t_char_node *head)
 
 void	mt_print_list(t_char_node *head)
 {
-	char		*str;
-	char		*new;
-	t_char_node	*aux;
+	char		c;
 
-	ft_printf("print\n");
-	if (!head)
-		return ;
-	str = ft_strdup("");
-	aux = head;
-	while (aux)
+	while (head)
 	{
-		new = ft_strjoin(str, (char *)&aux->character);
-		free(str);
-		str = new;
-		aux = aux->next;
+		c = head->character;
+		write (1, &c, 1);
+		head = head->next;
 	}
-	ft_printf("%s\n", str);
-	ft_printf("fin\n");
-	free(str);
 }

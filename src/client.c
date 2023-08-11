@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/10 16:04:43 by mvisca-g         ###   ########.fr       */
+/*   Updated: 2023/08/11 00:46:35 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,7 @@ int	main(int ac, char **av)
 	while (*str)
 	{
 		mt_send_signal(pid, *str);
-		ft_printf("char = %c\n", *str);
 		str++;
-
-	}
-	if (!*str)
-	{
-		ft_printf("null\n");
-		mt_send_signal(pid, *str);
 	}
 	return (0);
 }

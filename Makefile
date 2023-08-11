@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+         #
+#    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/10 16:41:46 by mvisca-g         ###   ########.fr        #
+#    Updated: 2023/08/11 11:17:13 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,10 @@ CNAME		:=	client
 #	INGREDIENTS		#
 #-------------------#
 
-LIBFT_DIR	:=	libft
-LIBFT_INC	:=	libft/include
-LIBFT		:=	libft/libft.a
+LIBFT_DIR	:=	libft/
+LIBFT_INC	:=	$(LIBFT_DIR)include/
+LIBFT_HD	:=	$(LIBFT_INC)libft.h
+LIBFT		:=	$(LIBFT_DIR)/libft.a
 
 SRC_DIR		:=	src/
 
@@ -45,6 +46,7 @@ SRC			+=	$(SRC_CLI)
 
 BUILD		:=	.build/
 INC			:=	include/
+MT_HD		:=	$(INC)minitalk.h
 
 OBJ_SER		:=	$(SRC_SER:.c=.o)
 OBJ_CLI		:=	$(SRC_CLI:.c=.o)
@@ -80,14 +82,16 @@ $(CNAME): $(addprefix $(BUILD), $(OBJ_CLI)) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ 
 	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
 
-$(BUILD)%.o: $(SRC_DIR)%.c $(INC)minitalk.h $(LIBFT_DIR)$(INC)libft.h Makefile $(LIBFT_DIR)/Makefile $(LIBFT)
+$(BUILD)%.o: $(SRC_DIR)%.c calldeps
 	@$(DIR_DUP)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(GREEN)Creating... $(NC) $(notdir $@)"
 -include $(DEP)
 
-# $(LIBFT):
-# 	@$(MAKE) -C $(LIBFT_DIR)
+callforlib:
+	@$(MAKE) -C $(LIBFT_DIR)
+
+calldeps: $(MT_HD) $(LIBFT_HD) $(LIBFT) Makefile $(LIBFT_DIR)/Makefile 
 
 clean:
 	@$(RM) $(BUILD)
@@ -99,7 +103,5 @@ fclean: clean
 
 re: fclean all
 
-callforlib:
-	@$(MAKE) -C $(LIBFT_DIR)
 
 .PHONY: clean fclean re all callforlib
