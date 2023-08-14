@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:03:44 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/14 13:30:19 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/14 17:04:51 by mvisca-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <minitalk.h>
 #include "../include/minitalk.h"
 
 static void	server_handler(int signum);
@@ -29,25 +28,28 @@ int	main(void)
 
 static void	server_handler(int signum)
 {
-	static t_mssg	mssg = {8, 0};
-	
-	mssg.character |= (signum == SIGUSR1);
-	mssg.current_bit--;
-	mssg.character <<= 1;
-	if (mssg.current_bit <= 0)
+	static int				octet = 0;
+	static unsigned char	c = 0;
+
+	if (signum == SIGUSR1)
+		c = c | 1;
+	c = c << 1;
+	octet++;
+	if (octet == 8)
 	{
-		ft_printf("curr bit = %c\n", mssg.character);
-		mssg.current_bit = 8;
-		if (mssg.character == '\0')
+		ft_printf("c = %c\n", c);
+		if (c == '\0')
 		{
-			ft_printf("\nEND\n");
+			ft_printf("END\n");
 		}
+		octet = 0;
+		c = 0;
 	}
 }
 
 static void	end_handler(int signum)
 {
-	if (signum == SIGINT)
-		ft_printf("Clear\n");
+	(void)signum;
+	ft_printf("Server terminated\n");
 	exit (EXIT_SUCCESS);
 }
