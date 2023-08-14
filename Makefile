@@ -6,7 +6,7 @@
 #    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/11 11:17:13 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/14 12:38:25 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,35 +24,36 @@ NC			:=	\033[0m
 #	TARGET			#
 #-------------------#
 
-SNAME		:=	server
+NAME		:=	server
 CNAME		:=	client
 
 #-------------------#
 #	INGREDIENTS		#
 #-------------------#
 
-LIBFT_DIR	:=	libft/
-LIBFT_INC	:=	$(LIBFT_DIR)include/
-LIBFT_HD	:=	$(LIBFT_INC)libft.h
+BUILD		:=	.build/
+INC			:=	include
+
+LIBFT_DIR	:=	libft
+LIBFT_INC	:=	$(LIBFT_DIR)/$(INC)
+LIBFT_HD	:=	$(LIBFT_INC)/libft.h
 LIBFT		:=	$(LIBFT_DIR)/libft.a
 
-SRC_DIR		:=	src/
+SRC_DIR		:=	src
 
-SRC_SER		:=	server.c 	\
-				server_utils.c
+SRC_SER		:=	server.c 
 SRC_CLI		:=	client.c
 SRC			:=	$(SRC_SER)
 SRC			+=	$(SRC_CLI)
 
-BUILD		:=	.build/
-INC			:=	include/
-MT_HD		:=	$(INC)minitalk.h
+MT_HD		:=	$(INC)/minitalk.h
 
 OBJ_SER		:=	$(SRC_SER:.c=.o)
+OBJ_SER		:=	$(addprefix $(BUILD), $(OBJ_SER))
 OBJ_CLI		:=	$(SRC_CLI:.c=.o)
+OBJ_CLI		:=	$(addprefix $(BUILD), $(OBJ_CLI))
 OBJ			:=	$(OBJ_SER)
 OBJ			+=	$(OBJ_CLI)
-OBJ			:=	$(addprefix $(BUILD), $(OBJ))
 
 DEP			:=	$(addprefix $(INC), $(notdir $(SRC:%.c=%.d)))
 
@@ -72,26 +73,31 @@ RM			:=	rm -r -f
 #	RECIPES			#
 #-------------------#
 
-all: callforlib $(SNAME) $(CNAME)
+all: $(LIBFT) $(NAME) | $(CNAME)
 
-$(SNAME): $(addprefix $(BUILD), $(OBJ_SER)) $(LIBFT)
+$(NAME): $(OBJ_SER) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
 	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
+-include $(DEPS)
 
-$(CNAME): $(addprefix $(BUILD), $(OBJ_CLI)) $(LIBFT)
+$(CNAME): $(OBJ_CLI) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ 
 	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
+-include $(DEPS)
 
-$(BUILD)%.o: $(SRC_DIR)%.c calldeps
+$(BUILD)%.o: $(SRC_DIR)/%.c calldeps
 	@$(DIR_DUP)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -I./$(LIBFT_INC) -c $< -o $@
 	@echo "$(GREEN)Creating... $(NC) $(notdir $@)"
 -include $(DEP)
 
-callforlib:
+$(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
-calldeps: $(MT_HD) $(LIBFT_HD) $(LIBFT) Makefile $(LIBFT_DIR)/Makefile 
+callforlib:	
+	@$(MAKE) -C $(LIBFT_DIR)
+
+calldeps: $(LIBFT) $(MT_HD) $(LIBFT_HD) Makefile $(LIBFT_DIR)/Makefile 
 
 clean:
 	@$(RM) $(BUILD)
@@ -103,5 +109,4 @@ fclean: clean
 
 re: fclean all
 
-
-.PHONY: clean fclean re all callforlib
+.PHONY: clean fclean re all

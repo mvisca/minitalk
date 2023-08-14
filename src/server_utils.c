@@ -6,14 +6,14 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 01:18:45 by mvisca            #+#    #+#             */
-/*   Updated: 2023/08/11 00:44:03 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/14 12:34:46 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minitalk.h"
 //#include <minitalk.h>
 
-t_char_node *mt_chrlst_new(t_char_node *head, char c)
+t_char_node *mt_chrlst_new(t_char_node **head, char c)
 {
 	t_char_node *node;
 
@@ -21,34 +21,29 @@ t_char_node *mt_chrlst_new(t_char_node *head, char c)
 	if (!node)
 	{
 		mt_chrlst_clear(head);
-		exit (EXIT_FAILURE);
+		return (NULL);
 	}
 	node->character = c;
 	node->next = NULL;
 	return (node);
 }
 
-t_char_node	*mt_chrlst_add(t_char_node **head, t_char_node *new)
+void	mt_chrlst_add(t_char_node **head, t_char_node *new)
 {
 	t_char_node	*aux;
 
-	ft_printf("add %c\n", new->character);
 	if (!*head)
 	{
 		*head = new;
-		return (*head);
+		return ;
 	}
 	aux = *head;
 	while (aux->next)
-	{
-		ft_printf("add loop for char %c\n", new->character);
 		aux = aux->next;
-	}
 	aux->next = new;
-	return (*head);
 }
 
-void mt_chrlst_clear(t_char_node *head)
+void mt_chrlst_clear(t_char_node **head)
 {
 	t_char_node	*aux;
 	t_char_node	*next;
@@ -60,16 +55,19 @@ void mt_chrlst_clear(t_char_node *head)
 		free(aux);
 		aux = next;
 	}
+	free(head);
 }
 
 void	mt_print_list(t_char_node *head)
 {
-	char		c;
+	char	c;
 
 	while (head)
 	{
 		c = head->character;
 		write (1, &c, 1);
 		head = head->next;
+		ft_printf("\naqui\n");
 	}
+	mt_chrlst_clear(head);
 }
