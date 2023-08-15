@@ -46,7 +46,7 @@ static void	mt_send_signal(pid_t pid, char *str)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			usleep(100);
+			usleep(150);
 		}
 		i++;
 		ft_printf("%c %d\n", c, (int)c);
@@ -56,7 +56,7 @@ static void	mt_send_signal(pid_t pid, char *str)
 	{
 		ft_printf("bit %d\n", 0);
 		kill(pid, SIGUSR2);
-		usleep(100);
+		usleep(150);
 		octet--;
 	}
 	ft_printf("\'\\n\'");
