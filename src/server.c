@@ -6,13 +6,14 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:03:44 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/15 15:08:02 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/16 01:37:16 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minitalk.h"
+#include <signal.h>
 
-static void	server_handler(int signum);
+static void	server_handler(int signum, siginfo_t *info, void *ctx);
 static int	message_zero(void);
 static void	end_handler(int signum);
 
@@ -20,10 +21,17 @@ char	message[1500];
 
 int	main(void)
 {
-	ft_printf("Server -> process ID <%d>\n", (int)getpid());
-	signal(SIGUSR1, server_handler);
-	signal(SIGUSR2, server_handler);
-	signal(SIGINT, end_handler);
+	struct sigaction s_end;
+	struct sigaction s_sa;
+	
+	ft_printf("Server PID <%d>\n", (int)getpid());
+	s_end.sa_handler = end_handler;
+	s_sa.sa_sigaction = server_handler;
+	s_sa.sa_flags = SA_SIGINFO;
+	sigaction(SIGINT, &s_end, NULL);
+	if (sigaction(SIGUSR1, &s_sa, NULL) == -1 ||
+		sigaction(SIGUSR2, &s_sa, NULL) == -1)
+		write (2, "sigaction\n", 10);
 	while (1)
 		pause();
 	return (0);
@@ -43,12 +51,14 @@ static int	message_zero(void)
 	return (0);
 }
 
-static void	server_handler(int signum)
+static void	server_handler(int signum, siginfo_t *info, void *ctx)
 {
 	static int				octet = 8;
 	static unsigned char	c = 0;
 	static int				i = 0;
 
+	(void) ctx;
+	ft_printf("PID REMITENTE %d\n", info->si_pid);
 	c = c << 1;
 	if (signum == SIGUSR1)
 		c = c | 1;

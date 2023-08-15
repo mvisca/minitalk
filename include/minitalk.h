@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:56:53 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/15 11:18:23 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/16 01:02:15 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/types.h>
 # include <signal.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <libft.h>
 
