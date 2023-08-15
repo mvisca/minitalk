@@ -6,7 +6,7 @@
 #    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/14 12:38:25 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/15 11:15:54 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,26 +73,24 @@ RM			:=	rm -r -f
 #	RECIPES			#
 #-------------------#
 
-all: $(LIBFT) $(NAME) | $(CNAME)
+all: $(LIBFT) $(NAME) $(CNAME)
 
 $(NAME): $(OBJ_SER) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
 	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
--include $(DEPS)
+
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR)
 
 $(CNAME): $(OBJ_CLI) $(LIBFT)
 	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ 
 	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
--include $(DEPS)
 
 $(BUILD)%.o: $(SRC_DIR)/%.c calldeps
 	@$(DIR_DUP)
-	@$(CC) $(CFLAGS) -I./$(LIBFT_INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 	@echo "$(GREEN)Creating... $(NC) $(notdir $@)"
 -include $(DEP)
-
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
 
 callforlib:	
 	@$(MAKE) -C $(LIBFT_DIR)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/14 17:10:15 by mvisca-g         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:44:36 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,31 @@ static void	mt_send_signal(pid_t pid, char *str)
 	char	c;
 
 	i = 0;
-	while (str[i++])
+	while (str[i])
 	{
 		octet = 7;
-		while (octet-- >= 0)
+		while (octet >= 0)
 		{
 			c = str[i];
-			c = c >> octet;
+			c = c >> octet--;
 			bit = c & 1;
 			ft_printf("bit %d\n", bit);
-			if (bit)
+			if (bit == 1)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
 			usleep(100);
 		}
+		i++;
 		ft_printf("%c %d\n", c, (int)c);
 	}
+	octet = 8;
+	while (octet > 0)
+	{
+		ft_printf("bit %d\n", 0);
+		kill(pid, SIGUSR2);
+	}
+	ft_printf("\'\\n\'");
 }
 
 int	main(int ac, char **av)
