@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/15 11:44:36 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/15 12:01:17 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void	mt_send_signal(pid_t pid, char *str)
 	{
 		ft_printf("bit %d\n", 0);
 		kill(pid, SIGUSR2);
+		usleep(100);
+		octet--;
 	}
 	ft_printf("\'\\n\'");
 }

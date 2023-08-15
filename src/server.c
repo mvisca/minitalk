@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:03:44 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/15 11:42:28 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/15 11:58:51 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static void	server_handler(int signum)
 	if (signum == SIGUSR1)
 		c = c | 1;
 	octet--;
-	ft_printf("bit %d\n", c & 1);
-	if (!octet)
+	ft_printf("bit %d / octet (%d)\n", c & 1, octet);
+	if (octet == 0)
 	{
 		if (c == '\0')
 			ft_printf("END\n");
