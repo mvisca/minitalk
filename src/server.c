@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:03:44 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/16 01:37:16 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/16 13:06:23 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(void)
 	s_end.sa_handler = end_handler;
 	s_sa.sa_sigaction = server_handler;
 	s_sa.sa_flags = SA_SIGINFO;
-	sigaction(SIGINT, &s_end, NULL);
-	if (sigaction(SIGUSR1, &s_sa, NULL) == -1 ||
+	if (sigaction(SIGINT, &s_end, NULL) == -1 ||
+		sigaction(SIGUSR1, &s_sa, NULL) == -1 ||
 		sigaction(SIGUSR2, &s_sa, NULL) == -1)
 		write (2, "sigaction\n", 10);
 	while (1)
@@ -58,7 +58,6 @@ static void	server_handler(int signum, siginfo_t *info, void *ctx)
 	static int				i = 0;
 
 	(void) ctx;
-	ft_printf("PID REMITENTE %d\n", info->si_pid);
 	c = c << 1;
 	if (signum == SIGUSR1)
 		c = c | 1;
@@ -72,7 +71,10 @@ static void	server_handler(int signum, siginfo_t *info, void *ctx)
 		if (c == '\0')
 		{
 			i = message_zero();
-			ft_printf("\n[End of message]\n");
+			ft_printf(" \n\n [End of message]\n [Sending confirmation...]\n");
+			usleep(300);
+			kill(info->si_pid, SIGUSR1);
+			ft_printf(" [Confirmation sent]\n");
 		}
 		octet = 8;
 		c = 0;
@@ -82,6 +84,6 @@ static void	server_handler(int signum, siginfo_t *info, void *ctx)
 static void	end_handler(int signum)
 {
 	(void)signum;
-	ft_printf("\n[CTRL + c] Server terminated\n");
+	ft_printf("\n [CTRL + c] Server terminated\n");
 	exit (EXIT_SUCCESS);
 }

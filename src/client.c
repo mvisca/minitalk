@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/16 00:31:54 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/16 12:44:44 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,29 @@ static void	mt_send_signal(pid_t pid, char *str)
 	}
 }
 
+static void	confirmation_handler(int signum, siginfo_t *info, void *ctx)
+{
+	(void)ctx;
+	(void)info;
+	(void)signum;
+	ft_printf(" [Message reception confirmed]\n");
+	ft_printf(" [Terminating program]\n");
+	exit (EXIT_SUCCESS);
+}
+
 int	main(int ac, char **av)
 {
-	pid_t	pid;
+	pid_t				pid;
+	struct sigaction	s_sa;
 
 	if (ac != 3)
 		return (1);
 	pid = mt_clientatoi(av[1]);
+	s_sa.sa_sigaction = confirmation_handler;
+	if (sigaction(SIGUSR1, &s_sa, NULL) == -1)
+		write (2, "sigaction\n", 10);
 	mt_send_signal(pid, av[2]);
+	while (1)
+		pause();
 	return (0);
 }
