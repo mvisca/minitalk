@@ -6,7 +6,7 @@
 #    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/16 15:33:39 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/16 16:13:56 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC			:=	SERVER_SRC CLIENT_SRC
 
 HEADERS		:=	include/minitalk.h
 
-CC			:=	cc -Wall -Wextra -Werror -MMD
+CC			:=	cc -Wall -Wextra -Werror -MMD -g -fsanitize=address
 CC_FLAGS	:=	-Llibft -lft
 
 SERVER_OBJS	:=	$(addprefix .build/, $(notdir $(SERVER_SRC:.c=.o)))

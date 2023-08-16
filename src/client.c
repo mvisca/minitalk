@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/16 15:48:31 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/16 17:42:30 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	confirmation_handler(int signum, siginfo_t *info, void *ctx)
 	(void)ctx;
 	(void)info;
 	(void)signum;
-	ft_printf(" [Message reception confirmed]\n");
+	ft_printf("\n [Message reception confirmed]\n");
 	ft_printf(" [Terminating program]\n");
 	exit (EXIT_SUCCESS);
 }

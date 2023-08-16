@@ -6,7 +6,7 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:03:44 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/16 14:06:59 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/16 16:27:31 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ static int	message_zero(void);
 static void	end_handler(int signum);
 
 char	message[1500];
+int		end = 0;
 
 int	main(void)
 {
 	struct sigaction s_end;
 	struct sigaction s_sa;
-	
+
 	ft_printf("Server PID <%d>\n", (int)getpid());
 	s_end.sa_handler = end_handler;
 	s_sa.sa_sigaction = server_handler;
@@ -43,7 +44,7 @@ static int	message_zero(void)
 	int	i;
 	
 	i = 0;
-	while (message[i] || i < 1500)
+	while (i < 1500 && message[i])
 		i++;
 	write (1, &message, i);
 	i = 0;
@@ -72,9 +73,9 @@ static void	server_handler(int signum, siginfo_t *info, void *ctx)
 		if (c == '\0')
 		{
 			i = message_zero();
-			ft_printf(" \n\n [End of message]\n [Sending confirmation...]\n");
 			usleep(300);
 			kill(info->si_pid, SIGUSR1);
+			ft_printf(" \n\n [End of message]\n [Sending confirmation...]\n");
 			ft_printf(" [Confirmation sent]\n");
 		}
 		octet = 8;
