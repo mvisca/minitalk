@@ -6,12 +6,30 @@
 #    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/16 18:38:41 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/16 18:46:33 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+#---------------------------------------#
+#	FORMAT								#
+#---------------------------------------#
+
+RED 		:= \033[0;31m
+GREEN 		:= \033[0;32m
+YELLOW 		:= \033[0;33m
+BLUE 		:= \033[0;34m
+NC 			:= \033[0m
+
+#---------------------------------------#
+#	FILES								#
+#---------------------------------------#
+
 SERVER_SRC	:=	src/server.c
 CLIENT_SRC	:=	src/client.c
+
+#---------------------------------------#
+#	INGREDIENTS							#
+#---------------------------------------#
 
 HEADERS		:=	include/minitalk.h
 
@@ -24,21 +42,33 @@ CLIENT_OBJS	:=	$(addprefix .build/, $(notdir $(CLIENT_SRC:.c=.o)))
 
 DEPS		:=	$(SERVER_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d)
 
+#---------------------------------------#
+#	RECIPES								#
+#---------------------------------------#
+
 all: libft server client
 
 libft:
 	@make -C libft --silent
 
 server: $(SERVER_OBJS) $(HEADERS)
-	$(CC) $(SERVER_OBJS) $(CC_FLAGS) $(DEBUG) -o server
+	@$(CC) $(SERVER_OBJS) $(CC_FLAGS) $(DEBUG) -MMD -o server
+	@echo "$(YELLOW)Packing $(RED)$(notdir $@) $(YELLOW)ready!$(NC)"
 
 client: $(CLIENT_OBJS) $(HEADERS)	
-	$(CC) $(CLIENT_OBJS) $(CC_FLAGS) $(DEBUG) -o client
+	@$(CC) $(CLIENT_OBJS) $(CC_FLAGS) $(DEBUG) -MMD -o client
+	@echo "$(YELLOW)Packing $(RED)$(notdir $@) $(YELLOW)ready!$(NC)"
 
 .build/%.o: src/%.c $(HEADERS) libft/libft.a Makefile
 	@mkdir -p .build
-	$(CC) -MMD $< -c -o $@ 
+	@$(CC) -MMD $< -c -o $@
+	@echo "$(GREEN)Building...  $(NC)$(notdir $<) $(RED)-> $(NC)$(notdir $@)"
+
 -include $(DEPS)
+
+#---------------------------------------#
+#	OTHERS								#
+#---------------------------------------#
 
 clean:
 	@rm -rdf .build
