@@ -6,7 +6,7 @@
 #    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/16 15:22:19 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/16 15:33:39 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,24 +27,25 @@ SERVER_DEPS	:=	$(addprefix .build/, $(notdir $(SERVER_SRC:.c=.d)))
 CLIENT_DEPS	:=	$(addprefix .build/, $(notdir $(CLIENT_SRC:.c=.d)))
 DEPS		:=	$(SERVER_DEPS) $(CLIENT_DEPS)
 
-%.o: %.c $(HEADERS) libft/libft.a Makefile
-	@mkdir -p .build
-	$(CC) $< -c -o $@
 
 all: libft server client
 
 libft:
 	@make -C libft --silent
 
-server: $(SERVER_SRC:.c=.o) $(HEADERS)
+server: $(SERVER_OBJS) $(HEADERS)
 	$(CC) $(SERVER_OBJS) $(CC_FLAGS) -o server
 
-client: $(CLIENT_SRC:.c=.o) $(HEADERS)	
+client: $(CLIENT_OBJS) $(HEADERS)	
 	$(CC) $(CLIENT_SRC) $(CC_FLAGS) -o client
+
+.build/%.o: src/%.c $(HEADERS) libft/libft.a Makefile
+	@mkdir -p .build
+	$(CC) $< -c -o $@
 -include $(DEPS)
 
 clean:
-	@rm -rdf $(OBJS)
+	@rm -rdf .build
 	@$(MAKE) clean -C libft --silent
 
 fclean: clean
@@ -54,6 +55,6 @@ fclean: clean
 re: fclean all
 
 test:
-	@echo "$(CLIENT_DEPS)"
+	@echo "$(DEPS)"
 
 .PHONY:	all libft clean fclean
