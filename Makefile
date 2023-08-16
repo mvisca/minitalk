@@ -6,105 +6,54 @@
 #    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/15 11:15:54 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/16 15:22:19 by mvisca           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#-------------------#
-#	FORMAT			#
-#-------------------#
+SERVER_SRC	:=	src/server.c
+CLIENT_SRC	:=	src/client.c
+SRC			:=	SERVER_SRC CLIENT_SRC
 
-RED			:=	\033[0;31m
-GREEN		:=	\033[0;32m
-YELLOW		:=	\033[0;33m
-BLUE		:=	\033[0;34m
-NC			:=	\033[0m
+HEADERS		:=	include/minitalk.h
 
-#-------------------#
-#	TARGET			#
-#-------------------#
+CC			:=	cc -Wall -Wextra -Werror -MMD
+CC_FLAGS	:=	-Llibft -lft
 
-NAME		:=	server
-CNAME		:=	client
+SERVER_OBJS	:=	$(addprefix .build/, $(notdir $(SERVER_SRC:.c=.o)))
+CLIENT_OBJS	:=	$(addprefix .build/, $(notdir $(CLIENT_SRC:.c=.o)))
+OBJS		:=	$(SERVER_OBJS) $(CLIENT_OBJS)
 
-#-------------------#
-#	INGREDIENTS		#
-#-------------------#
+SERVER_DEPS	:=	$(addprefix .build/, $(notdir $(SERVER_SRC:.c=.d)))
+CLIENT_DEPS	:=	$(addprefix .build/, $(notdir $(CLIENT_SRC:.c=.d)))
+DEPS		:=	$(SERVER_DEPS) $(CLIENT_DEPS)
 
-BUILD		:=	.build/
-INC			:=	include
+%.o: %.c $(HEADERS) libft/libft.a Makefile
+	@mkdir -p .build
+	$(CC) $< -c -o $@
 
-LIBFT_DIR	:=	libft
-LIBFT_INC	:=	$(LIBFT_DIR)/$(INC)
-LIBFT_HD	:=	$(LIBFT_INC)/libft.h
-LIBFT		:=	$(LIBFT_DIR)/libft.a
+all: libft server client
 
-SRC_DIR		:=	src
+libft:
+	@make -C libft --silent
 
-SRC_SER		:=	server.c 
-SRC_CLI		:=	client.c
-SRC			:=	$(SRC_SER)
-SRC			+=	$(SRC_CLI)
+server: $(SERVER_SRC:.c=.o) $(HEADERS)
+	$(CC) $(SERVER_OBJS) $(CC_FLAGS) -o server
 
-MT_HD		:=	$(INC)/minitalk.h
-
-OBJ_SER		:=	$(SRC_SER:.c=.o)
-OBJ_SER		:=	$(addprefix $(BUILD), $(OBJ_SER))
-OBJ_CLI		:=	$(SRC_CLI:.c=.o)
-OBJ_CLI		:=	$(addprefix $(BUILD), $(OBJ_CLI))
-OBJ			:=	$(OBJ_SER)
-OBJ			+=	$(OBJ_CLI)
-
-DEP			:=	$(addprefix $(INC), $(notdir $(SRC:%.c=%.d)))
-
-#-------------------#
-#	FLAGS			#
-#-------------------#
-
-CC 			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
-CPPFLAGS	:=	-L./$(LIBFT_DIR) -lft -I./$(LIBFT_INC) -I./$(INC)
-DEBUG		:=	-g -fsanitize=address
-DIR_DUP		:=	mkdir -p .build
-MAKEFLAGS	+=	--no-print-directory
-RM			:=	rm -r -f
-
-#-------------------#
-#	RECIPES			#
-#-------------------#
-
-all: $(LIBFT) $(NAME) $(CNAME)
-
-$(NAME): $(OBJ_SER) $(LIBFT)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@
-	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
-
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
-
-$(CNAME): $(OBJ_CLI) $(LIBFT)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ 
-	@echo "$(GREEN)Packing... $(NC) $(notdir $@)"
-
-$(BUILD)%.o: $(SRC_DIR)/%.c calldeps
-	@$(DIR_DUP)
-	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
-	@echo "$(GREEN)Creating... $(NC) $(notdir $@)"
--include $(DEP)
-
-callforlib:	
-	@$(MAKE) -C $(LIBFT_DIR)
-
-calldeps: $(LIBFT) $(MT_HD) $(LIBFT_HD) Makefile $(LIBFT_DIR)/Makefile 
+client: $(CLIENT_SRC:.c=.o) $(HEADERS)	
+	$(CC) $(CLIENT_SRC) $(CC_FLAGS) -o client
+-include $(DEPS)
 
 clean:
-	@$(RM) $(BUILD)
-	@$(MAKE) clean -C $(LIBFT_DIR)
+	@rm -rdf $(OBJS)
+	@$(MAKE) clean -C libft --silent
 
 fclean: clean
-	@$(RM) $(BUILD)
-	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@$(MAKE) fclean -C libft --silent
+	@rm -rf .build server client
 
 re: fclean all
 
-.PHONY: clean fclean re all
+test:
+	@echo "$(CLIENT_DEPS)"
+
+.PHONY:	all libft clean fclean

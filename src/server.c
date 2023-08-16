@@ -6,11 +6,12 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:03:44 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/16 13:23:55 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/16 14:06:59 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minitalk.h"
+# include "../libft/include/libft.h"
 #include <signal.h>
 
 static void	server_handler(int signum, siginfo_t *info, void *ctx);
@@ -89,18 +90,6 @@ static void	end_handler(int signum)
 }
  
 // Required code for alternative implementation with linked lists
-// 
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   server_utils.c                                     :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2023/08/05 01:18:45 by mvisca            #+#    #+#             */
-// /*   Updated: 2023/08/14 12:34:46 by mvisca           ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
 // 
 // #include "../include/minitalk.h"
 // 
