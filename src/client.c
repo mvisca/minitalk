@@ -6,12 +6,36 @@
 /*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/17 23:36:58 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/08/18 00:00:57 by mvisca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include <minitalk.h>
 #include "../include/minitalk.h"
+
+static int	mt_clientatoi(const char *nptr);
+static void	mt_send_signal(pid_t pid, char *str1, char *str2);
+static void	confirmation_handler(int signum, siginfo_t *info, void *ctx);
+
+int	main(int ac, char **av)
+{
+	pid_t				pid;
+	struct sigaction	s_sa;
+
+	if (ac != 3)
+		return (1);
+	pid = mt_clientatoi(av[1]);
+	s_sa.sa_sigaction = confirmation_handler;
+	if (sigaction(SIGUSR1, &s_sa, NULL) == -1)
+		write (2, "sigaction\n", 10);
+	mt_send_signal(pid, av[2], av[2]);
+	while (1)
+	{
+		kill(pid, SIGUSR2);
+		usleep(2000);
+	}
+	return (0);
+}
 
 static int	mt_clientatoi(const char *nptr)
 {
@@ -25,40 +49,67 @@ static int	mt_clientatoi(const char *nptr)
 	return (res);
 }
 
-static void	mt_send_signal(pid_t pid, char *str)
+static void	mt_send_signal(pid_t pid, char *str1, char *str2)
 {
 	int		octet;
-	int		i;
 	char	c;
 
-	i = 0;
-	while (str[i])
+	while (*str1)
 	{
 		octet = 7;
 		while (octet >= 0)
 		{
-			c = str[i];
+			c = *str1;
 			c = c >> octet--;
 			if (c & 1)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			if (i % 1000 == 0)
+			if ((str1 - str2) % 1000 == 0)
 				usleep(4000);
 			usleep(400);
 		}
-		write (1, "sending... ", 11);
-		write (1, &str[i++], 1);
-		write (1, "\n", 1);
+		write (1, str1++, 1);
+		write (1, "sent\n", 5);
 	}
-	octet = 8;
-	while (octet > 0)
-	{
-		kill(pid, SIGUSR2);
+	while (++octet < 8 && kill(pid, SIGUSR2))
 		usleep(200);
-		octet--;
-	}
 }
+
+// static void	mt_send_signal(pid_t pid, char *str)
+// {
+// 	int		octet;
+// 	int		i;
+// 	char	c;
+
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		octet = 7;
+// 		while (octet >= 0)
+// 		{
+// 			c = str[i];
+// 			c = c >> octet--;
+// 			if (c & 1)
+// 				kill(pid, SIGUSR1);
+// 			else
+// 				kill(pid, SIGUSR2);
+// 			if (i % 1000 == 0)
+// 				usleep(4000);
+// 			usleep(400);
+// 		}
+// 		write (1, "sending... ", 11);
+// 		write (1, &str[i++], 1);
+// 		write (1, "\n", 1);
+// 	}
+// 	octet = 8;
+// 	while (octet > 0)
+// 	{
+// 		kill(pid, SIGUSR2);
+// 		usleep(200);
+// 		octet--;
+// 	}
+// }
 
 static void	confirmation_handler(int signum, siginfo_t *info, void *ctx)
 {
@@ -68,24 +119,4 @@ static void	confirmation_handler(int signum, siginfo_t *info, void *ctx)
 	ft_printf("\n [Message reception confirmed]\n");
 	ft_printf(" [Terminating program]\n");
 	exit (EXIT_SUCCESS);
-}
-
-int	main(int ac, char **av)
-{
-	pid_t				pid;
-	struct sigaction	s_sa;
-
-	if (ac != 3)
-		return (1);
-	pid = mt_clientatoi(av[1]);
-	s_sa.sa_sigaction = confirmation_handler;
-	if (sigaction(SIGUSR1, &s_sa, NULL) == -1)
-		write (2, "sigaction\n", 10);
-	mt_send_signal(pid, av[2]);
-	while (1)
-	{
-		kill(pid, SIGUSR2);
-		usleep(2000);
-	}
-	return (0);
 }
