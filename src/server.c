@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:03:44 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/08/17 18:44:57 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/09/05 15:04:29 by mvisca-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	mt_server_handler(int signum, siginfo_t *info, void *ctx)
 		{
 			kill(info->si_pid, SIGUSR1);
 			mt_print_and_reset_message(&i);
-			write (1, "\n\n[Process complete]\n", 21);
+			write (1, "\n (!) [Process complete]\n", 25);
 			ft_printf("PID: %d\n", (int)getpid());
 		}
 		else if (i == 1000)

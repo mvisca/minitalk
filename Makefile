@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+         #
+#    By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/20 20:03:58 by mvisca-g          #+#    #+#              #
-#    Updated: 2023/08/18 10:47:35 by mvisca           ###   ########.fr        #
+#    Updated: 2023/08/19 20:01:12 by mvisca-g         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ DEPS		:=	$(SERVER_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d)
 #	RECIPES								#
 #---------------------------------------#
 
-all: libft server client
+all: libft server client | callforlib
 
 libft:
 	@make -C libft --silent
@@ -69,6 +69,8 @@ client: $(CLIENT_OBJS) $(HEADERS)
 #---------------------------------------#
 #	OTHERS								#
 #---------------------------------------#
+
+callforlib: libft
 
 clean:
 	@rm -rdf .build
