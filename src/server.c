@@ -6,13 +6,11 @@
 /*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 21:03:44 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/09/05 15:04:29 by mvisca-g         ###   ########.fr       */
+/*   Updated: 2023/09/18 12:54:39 by mvisca-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minitalk.h"
-#include "../libft/include/libft.h"
-#include <signal.h>
 
 static void	mt_server_handler(int signum, siginfo_t *info, void *ctx);
 static void	mt_print_and_reset_message(unsigned short *i);

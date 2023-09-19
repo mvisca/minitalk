@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvisca <mvisca@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mvisca-g <mvisca-g@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:54:35 by mvisca-g          #+#    #+#             */
-/*   Updated: 2023/09/05 19:02:56 by mvisca           ###   ########.fr       */
+/*   Updated: 2023/09/18 13:19:23 by mvisca-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ static void	mt_send_signal(pid_t pid, char *str1, char *str2)
 				kill(pid, SIGUSR2);
 			if ((str1 - str2) % 1000 == 0)
 				usleep(2000);
-			usleep(100);
+			usleep(10);
 		}
-		write(1, " (!) [Sending char..", 20);
+		write(1, " (!) [Sending char..", 23);
 		if (str1++ && (int)c % 2)
 			write(1, "..", 1);
 		write(1, "]\n", 2);
